@@ -7,6 +7,8 @@ namespace DonutsApi.Infrastructure.ContextExtensions
 {
     public class AuditInfoBeforeSaveChangesHandler : IBeforeSaveChangesHandler
     {
+        // On its own this is fairly useless (you can just use default constraints) but it becomes more useful
+        // when also setting the id of the user who created/edited the entry
         public Task Handle(DonutContext context)
         {
             var addedEntities = context.ChangeTracker.Entries()
