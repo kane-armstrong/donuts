@@ -17,6 +17,8 @@ namespace DonutsApi.Infrastructure.ContextExtensions
 
         public Task Handle(DonutContext context)
         {
+            var userId = _currentUser.UserId;
+
             var addedEntities = context.ChangeTracker.Entries()
                 .Where(ch => ch.State == EntityState.Added)
                 .Select(ch => ch.Entity)
@@ -26,9 +28,9 @@ namespace DonutsApi.Infrastructure.ContextExtensions
             foreach (var entity in addedEntities)
             {
                 entity.CreatedOn = DateTimeOffset.UtcNow;
-                entity.CreatedBy = _currentUser.UserId;
+                entity.CreatedBy = userId;
                 entity.LastModifiedOn = DateTimeOffset.UtcNow;
-                entity.LastModifiedBy = _currentUser.UserId;
+                entity.LastModifiedBy = userId;
             }
 
             var updatedEntities = context.ChangeTracker.Entries()
@@ -40,7 +42,7 @@ namespace DonutsApi.Infrastructure.ContextExtensions
             foreach (var entity in updatedEntities)
             {
                 entity.LastModifiedOn = DateTimeOffset.UtcNow;
-                entity.LastModifiedBy = _currentUser.UserId;
+                entity.LastModifiedBy = userId;
             }
 
             return Task.CompletedTask;
