@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DonutsApi.Application;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DonutsApi.Infrastructure
 {
@@ -9,5 +10,6 @@ namespace DonutsApi.Infrastructure
     {
         DbSet<Donut> Donuts { get; }
         Task Complete();
+        EntityEntry<Donut> GetEntry(Donut donut);
     }
 }

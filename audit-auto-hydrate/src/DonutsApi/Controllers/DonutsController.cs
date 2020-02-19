@@ -1,8 +1,8 @@
-﻿using System;
-using DonutsApi.Application;
+﻿using DonutsApi.Application;
 using DonutsApi.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -64,9 +64,10 @@ namespace DonutsApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute]Guid id)
         {
-            var donut = await _unitOfWork.Donuts.FirstOrDefaultAsync(x => x.Id == id);
-            if (donut == null) return NotFound();
-            _unitOfWork.Donuts.Remove(donut);
+            var exists = await _unitOfWork.Donuts.AnyAsync(x => x.Id == id);
+            if (!exists) return NotFound();
+            var entry = _unitOfWork.GetEntry(new Donut { Id = id });
+            entry.State = EntityState.Deleted;
             await _unitOfWork.Complete();
             return NoContent();
         }

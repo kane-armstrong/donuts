@@ -2,6 +2,7 @@
 using DonutsApi.Infrastructure.ContextExtensions;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DonutsApi.Infrastructure
 {
@@ -49,5 +50,7 @@ namespace DonutsApi.Infrastructure
             await SaveChangesAsync(true);
             await _saveChangesProcessor.RunAllAfterHandlers(this);
         }
+
+        public EntityEntry<Donut> GetEntry(Donut donut) => Entry(donut);
     }
 }
