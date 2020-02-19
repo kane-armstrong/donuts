@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1.100-alpine3.10 AS build-env
+ARG Configuration=Release
+WORKDIR /app
+COPY . ./
+RUN dotnet publish src/DonutsApi -c $Configuration -o ../../out -r alpine-x64
+
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1.0-alpine3.10
+WORKDIR /app
+COPY --from=build-env /out ./
+ENTRYPOINT ["./DonutsApi"]

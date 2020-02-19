@@ -1,0 +1,21 @@
+version: '3'
+services:
+  database:
+    build:
+      context: .
+      dockerfile: Dockerfile.Database
+      args:
+        DACPAC_PATH: "src/DonutsDatabase/bin/Debug/DonutsDatabase.dacpac"
+    ports:
+      - "1400:1433"
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.Api
+    ports:
+      - "5110:5110"
+    environment:
+      ASPNETCORE_URLS: http://+:5110
+      ASPNETCORE_ENVIRONMENT: Development
+      CONNECTIONSTRINGS__SITESDB: "Data Source=database;Initial Catalog=DonutsDatabase;User ID=SA;Password=ProbablyPwned1;"
+    depends_on: [ "database" ]

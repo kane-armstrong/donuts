@@ -9,6 +9,9 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DonutsDatabase", "src\Donut
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC66523B-2303-48F1-BC1A-11C8F1A33B15}"
 	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile.Api = Dockerfile.Api
+		Dockerfile.Database = Dockerfile.Database
 		README.md = README.md
 	EndProjectSection
 EndProject

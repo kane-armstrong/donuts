@@ -1,0 +1,12 @@
+.git
+.vs
+.gitattributes
+.gitignore
+docker-compose.yml
+Dockerfile.Api
+Dockerfile.Database
+Jenkinsfile
+LICENSE
+README.md
+**/*.dbmdl
+**/*.jfm
