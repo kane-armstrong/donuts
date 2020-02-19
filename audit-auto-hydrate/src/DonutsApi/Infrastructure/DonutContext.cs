@@ -26,7 +26,8 @@ namespace DonutsApi.Infrastructure
             {
                 entity.ToTable("Donuts");
                 entity.HasKey(x => x.Id);
-                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 const int totalArbitraryLength = 127;
                 entity.Property(a => a.Flavor).HasMaxLength(totalArbitraryLength).IsRequired();
                 entity.Property(b => b.Price).HasColumnType("decimal(10,2)").IsRequired();

@@ -27,6 +27,7 @@ namespace DonutsApi
             services.AddSwaggerDocument();
             services.AddControllers();
             services.AddDbContext<DonutContext>(options => options.UseSqlServer(Configuration.GetConnectionString(nameof(DonutContext))));
+            services.AddSingleton<ICurrentUserProfile, RandomUserProfile>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

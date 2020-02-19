@@ -1,4 +1,5 @@
-﻿using DonutsApi.Application;
+﻿using System;
+using DonutsApi.Application;
 using DonutsApi.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,7 @@ namespace DonutsApi.Controllers
         }
 
         [HttpGet("{id}", Name = nameof(GetById))]
-        public async Task<ActionResult<Donut>> GetById([FromRoute]int id)
+        public async Task<ActionResult<Donut>> GetById([FromRoute]Guid id)
         {
             var donut = await _unitOfWork.Donuts.FirstOrDefaultAsync(x => x.Id == id);
             if (donut != null) return Ok(donut);
@@ -39,6 +40,7 @@ namespace DonutsApi.Controllers
         {
             var donut = new Donut
             {
+                Id = Guid.NewGuid(),
                 Flavor = command.Flavor,
                 Price = command.Price
             };
@@ -48,7 +50,7 @@ namespace DonutsApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute]int id, [FromBody] EditDonut command)
+        public async Task<IActionResult> Update([FromRoute]Guid id, [FromBody] EditDonut command)
         {
             if (command.Id != id) return BadRequest();
             var donut = await _unitOfWork.Donuts.FirstOrDefaultAsync(x => x.Id == id);
@@ -60,7 +62,7 @@ namespace DonutsApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute]int id)
+        public async Task<IActionResult> Delete([FromRoute]Guid id)
         {
             var donut = await _unitOfWork.Donuts.FirstOrDefaultAsync(x => x.Id == id);
             if (donut == null) return NotFound();
@@ -80,7 +82,7 @@ namespace DonutsApi.Controllers
 
     public class EditDonut
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Flavor { get; set; }
         [Required]
