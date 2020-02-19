@@ -1,5 +1,6 @@
 using DonutsApi.Infrastructure;
 using DonutsApi.Infrastructure.ContextExtensions;
+using DonutsApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
