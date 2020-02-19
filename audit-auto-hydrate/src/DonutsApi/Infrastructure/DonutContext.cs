@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using DonutsApi.Application;
+﻿using DonutsApi.Application;
 using DonutsApi.Infrastructure.ContextExtensions;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace DonutsApi.Infrastructure
 {
@@ -27,12 +27,18 @@ namespace DonutsApi.Infrastructure
                 entity.ToTable("Donuts");
                 entity.HasKey(x => x.Id);
                 entity.Property(e => e.Id).UseIdentityColumn();
-                
                 const int totalArbitraryLength = 127;
                 entity.Property(a => a.Flavor).HasMaxLength(totalArbitraryLength).IsRequired();
                 entity.Property(b => b.Price).HasColumnType("decimal(10,2)").IsRequired();
                 entity.Property(c => c.CreatedOn).IsRequired();
                 entity.Property(c => c.LastModifiedOn).IsRequired();
+            });
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("Users");
+                entity.HasKey(x => x.Id);
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(a => a.Name).HasMaxLength(255).IsRequired();
             });
         }
 

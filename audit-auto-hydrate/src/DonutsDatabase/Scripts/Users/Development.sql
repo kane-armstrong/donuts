@@ -1,0 +1,10 @@
+﻿MERGE INTO dbo.Users AS t 
+USING (
+	VALUES
+	('26a42892-9eba-426a-822b-84c537c830cc', 'John Doe'),
+	('6115f347-6af9-4bcf-b431-0eb920f54882', 'Jane Doe')
+) AS s (Id, [Name])
+ON t.Id = s.Id
+WHEN MATCHED THEN UPDATE SET [Name] = s.[Name]
+WHEN NOT MATCHED BY TARGET THEN INSERT (Id, [Name]) VALUES (s.Id, s.[Name])
+WHEN NOT MATCHED BY SOURCE THEN DELETE;
